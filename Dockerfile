@@ -55,15 +55,14 @@ RUN tar -C /opt -xf /tmp/kafka-${KAFKA_VERSION}.tgz \
     && ln -s /opt/kafka-${KAFKA_VERSION} ${KAFKA_PREFIX}} \
     && mkdir /var/lib/kafka
 
-
 # Copy Flume Config Files:
 COPY config/flume-env.sh ${FLUME_PREFIX}/conf/flume-env.sh
 COPY config/agent.conf ${FLUME_PREFIX}/conf/agent.conf
 
-# Expose Port For JMX Remote Connection
+# Expose Port For JMX Remote Connection:
 EXPOSE 5445
 
-# Set Work Directory And Start Flume-Agent
+# Set Work Directory And Start Flume-Agent:
 WORKDIR /opt/flume 
 ENTRYPOINT ["bin/flume-ng", "agent"]
 CMD ["-n", "agent", "-c", "/opt/flume/conf", "-f", "conf/agent.conf","-Dflume.root.logger=INFO,LOGFILE,console"]
